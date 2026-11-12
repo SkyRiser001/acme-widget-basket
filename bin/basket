@@ -1,0 +1,29 @@
+<?php
+
+declare(strict_types=1);
+
+use Acme\AcmeWidgetCo;
+use Acme\UnknownProductException;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$codes = array_slice($argv, 1);
+$help = "Usage: php bin/basket <product-code> [<product-code> ...]\nExample: php bin/basket R01 R01\n";
+
+if ($codes === [] || in_array('--help', $codes, true) || in_array('-h', $codes, true)) {
+    fwrite($codes === [] ? STDERR : STDOUT, $help);
+    exit($codes === [] ? 1 : 0);
+}
+
+$basket = AcmeWidgetCo::basket();
+
+try {
+    foreach ($codes as $code) {
+        $basket->add($code);
+    }
+} catch (UnknownProductException $exception) {
+    fwrite(STDERR, $exception->getMessage() . PHP_EOL);
+    exit(1);
+}
+
+fwrite(STDOUT, $basket->summary()->toText());

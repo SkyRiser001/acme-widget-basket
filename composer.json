@@ -1,0 +1,29 @@
+{
+    "name": "acme/widget-basket",
+    "description": "Proof of concept sales basket for Acme Widget Co.",
+    "type": "project",
+    "license": "UNLICENSED",
+    "require": {
+        "php": ">=8.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Acme\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Acme\\Tests\\": "tests/"
+        }
+    },
+    "bin": [
+        "bin/basket"
+    ],
+    "scripts": {
+        "test": "phpunit --colors=always --testdox",
+        "serve": "@php -S 127.0.0.1:8080 -t public public/index.php"
+    }
+}
